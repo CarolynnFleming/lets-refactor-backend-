@@ -16,45 +16,45 @@ describe('refactory routes', () => {
   it('should be able to create an song', async () => {
     const res = await request(app)
       .post('/api/v1/songs')
-      .send({ artist: 'Widget', genre: 1 });
+      .send({ artist: 'Beyonce', genre: 'R&B' });
 
     expect(res.body).toEqual({
       id: expect.any(String),
-      product: 'Widget',
-      genre: 1,
+      artist: 'Beyonce',
+      genre: 'R&B',
     });
   });
 
   it('should be able to list an song by id', async () => {
-    const song = await Song.insert({ artist: 'Widget', genre: 1 });
+    const song = await Song.insert({ artist: 'Beyonce', genre: 'R&B' });
     const res = await request(app).get(`/api/v1/songs/${song.id}`);
 
     expect(res.body).toEqual(song);
   });
 
   it('should be able to list songs', async () => {
-    await Song.insert({ artist: 'Widget', genre: 'blues' });
+    await Song.insert({ artist: 'Beyonce', genre: 'R&B' });
     const res = await request(app).get('/api/v1/songs');
 
     expect(res.body).toEqual([
       {
         id: expect.any(String),
-        artist: 'Widget',
-        genre: 1,
+        artist: 'Beyonce',
+        genre: 'R&B',
       },
     ]);
   });
 
   it('should be able to update an song', async () => {
-    const song = await Song.insert({ artist: 'Widget', genre: 'blues' });
+    const song = await Song.insert({ artist: 'Beyonce', genre: 'R&B' });
     const res = await request(app)
       .patch(`/api/v1/songs/${song.id}`)
-      .send({ artist: 'Thingamajig', genre: 2 });
+      .send({ artist: 'SZA', genre: 'alternative' });
 
     const expected = {
       id: expect.any(String),
-      artist: 'Thingamajig',
-      genre: 2,
+      artist: 'SZA',
+      genre: 'alternative',
     };
 
     expect(res.body).toEqual(expected);
@@ -62,12 +62,11 @@ describe('refactory routes', () => {
   });
 
   it('should be able to delete an order', async () => {
-    const song = await Song.insert({ artist: 'Widget', genre: 1 });
+    const song = await Song.insert({ artist: 'Beyonce', genre: 'R&B' });
     const res = await request(app).delete(`/api/v1/songs/${song.id}`);
 
     expect(res.body).toEqual(song);
     expect(await Song.getById(song.id)).toBeNull();
   });
 });
-
 

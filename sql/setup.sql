@@ -5,5 +5,5 @@ DROP TABLE IF EXISTS songs;
     CREATE TABLE songs (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
     artist TEXT NOT NULL,
-    genre INT NOT NULL
+    genre TEXT NOT NULL
 );
